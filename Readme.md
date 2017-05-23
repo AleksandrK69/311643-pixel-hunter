@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
-* Студент: [Andrii Zaimak](https://up.htmlacademy.ru/ecmascript/2/user/311643).
-* Наставник: `Неизвестно`.
+* Студент: [Andrii Zaimak] (https://up.htmlacademy.ru/ecmascript/2/user/311643).
+* Наставник: [Семен Целищев] (https://htmlacademy.ru/profile/id396229).
 
 ---
 
