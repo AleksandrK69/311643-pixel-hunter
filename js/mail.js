@@ -1,12 +1,10 @@
 window.main = function () {
-  const _mainCentralNode = document.querySelector(`.central`);
-  const _templatesNodeList = document.querySelectorAll(`template`);
+  const mainCentralNode = document.querySelector(`.central`);
+  const templatesNodeList = document.querySelectorAll(`template`);
 
-  let _currentScreen = 0;
+  let currentScreen = 0;
 
-  showScreen(0);
-
-  document.addEventListener(`keyup`, keyPressHandler);
+  document.addEventListener(`keyup`, keyPressHandler, true);
 
   /**
    * Нажатие кнопки на клавиатуре.
@@ -18,9 +16,11 @@ window.main = function () {
 
     if (evt.altKey) {
       if (evt.keyCode === KEY_LEFT) {
-        showScreen(_currentScreen - 1);
+        evt.preventDefault();
+        showScreen(currentScreen - 1);
       } else if (evt.keyCode === KEY_RIGHT) {
-        showScreen(_currentScreen + 1);
+        evt.preventDefault();
+        showScreen(currentScreen + 1);
       }
     }
   }
@@ -29,8 +29,8 @@ window.main = function () {
    * Очищает содержимое тега main.
    */
   function clearMainNode() {
-    while (_mainCentralNode.lastChild) {
-      _mainCentralNode.removeChild(_mainCentralNode.lastChild);
+    while (mainCentralNode.lastChild) {
+      mainCentralNode.removeChild(mainCentralNode.lastChild);
     }
   }
 
@@ -40,15 +40,16 @@ window.main = function () {
    */
   function showScreen(index = 0) {
     // проверка на крайние значения массива
-    if (index > _templatesNodeList.length - 1 || index < 0) {
+    if (index > templatesNodeList.length - 1 || index < 0) {
       return;
     }
     // запись текушего номера экрана
-    _currentScreen = index;
+    currentScreen = index;
     // очистка тега main
     clearMainNode();
     // отображение экрана
-    _mainCentralNode.appendChild(_templatesNodeList[index].content.cloneNode(true));
+    mainCentralNode.appendChild(templatesNodeList[index].content.cloneNode(true));
   }
 
+  showScreen(currentScreen);
 }();
