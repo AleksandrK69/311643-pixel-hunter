@@ -50,7 +50,7 @@ Array.from(radioListNode).forEach((item) => {
   item.addEventListener(`change`, () => {
     const question1Group = element.querySelector(`input[name="question1"]:checked`);
     const question2Group = element.querySelector(`input[name="question2"]:checked`);
-    
+
     if (question1Group && question2Group) {
       utils.showScreen(game2Screen, true);
     }
