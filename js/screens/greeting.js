@@ -1,4 +1,4 @@
-import rulesScreen from './rules-screen';
+import rulesScreen from './rules';
 import * as utils from '../utils';
 
 const html = `<div class="greeting central--blur">
@@ -18,9 +18,6 @@ const html = `<div class="greeting central--blur">
 const element = utils.getElementFromTemplate(html);
 const nextBtnNode = element.querySelector(`.greeting__continue`);
 
-/**
- * Переход на следующий экран.
- */
 nextBtnNode.addEventListener(`click`, () => {
   utils.showScreen(rulesScreen, true);
 });

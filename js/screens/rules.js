@@ -1,4 +1,4 @@
-import game1Screen from './game-1-screen';
+import game1Screen from './game-1';
 import * as utils from '../utils';
 
 const html = `<div class="rules">
@@ -22,16 +22,10 @@ const element = utils.getElementFromTemplate(html);
 const nameNode = element.querySelector(`.rules__input`);
 const goBtnNode = element.querySelector(`.rules__button`);
 
-/**
- * Отслеживание ввода символов тукстовое поле.
- */
 nameNode.addEventListener(`input`, () => {
   goBtnNode.disabled = nameNode.value.length === 0;
 });
 
-/**
- * Переход на следующий экран.
- */
 goBtnNode.addEventListener(`click`, () => {
   utils.showScreen(game1Screen, true);
 });

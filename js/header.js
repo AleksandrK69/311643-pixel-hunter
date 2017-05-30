@@ -1,4 +1,4 @@
-import introScreen from './screens/intro-screen';
+import introScreen from './screens/intro';
 import * as utils from './utils';
 
 const backBtnHtml = `<div class="header__back">
@@ -24,6 +24,4 @@ backBtnNode.addEventListener(`click`, () => {
   utils.showScreen(introScreen);
 });
 
-export const getHeader = () => {
-  return headerElement;
-};
+export const getHeader = () => headerElement;

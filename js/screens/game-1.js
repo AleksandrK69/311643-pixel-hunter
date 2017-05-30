@@ -1,4 +1,4 @@
-import game2Screen from './game-2-screen';
+import game2Screen from './game-2';
 import * as utils from '../utils';
 
 const html = `<div class="game">
@@ -48,7 +48,10 @@ const radioListNode = element.querySelectorAll(`input[type='radio']`);
 
 Array.from(radioListNode).forEach((item) => {
   item.addEventListener(`change`, () => {
-    if (element.querySelector(`input[name="question1"]:checked`) && element.querySelector(`input[name="question2"]:checked`)) {
+    const question1Group = element.querySelector(`input[name="question1"]:checked`);
+    const question2Group = element.querySelector(`input[name="question2"]:checked`);
+    
+    if (question1Group && question2Group) {
       utils.showScreen(game2Screen, true);
     }
   });

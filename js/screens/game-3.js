@@ -1,19 +1,17 @@
-import game3Screen from './game-3-screen';
+import statsScreen from './stats';
 import * as utils from '../utils';
 
 const html = `<div class="game">
-    <p class="game__task">Угадай, фото или рисунок?</p>
-    <form class="game__content  game__content--wide">
+    <p class="game__task">Найдите рисунок среди изображений</p>
+    <form class="game__content  game__content--triple">
       <div class="game__option">
-        <img src="http://placehold.it/705x455" alt="Option 1" width="705" height="455">
-        <label class="game__answer  game__answer--photo">
-          <input name="question1" type="radio" value="photo">
-          <span>Фото</span>
-        </label>
-        <label class="game__answer  game__answer--wide  game__answer--paint">
-          <input name="question1" type="radio" value="paint">
-          <span>Рисунок</span>
-        </label>
+        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+      </div>
+      <div class="game__option  game__option--selected">
+        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+      </div>
+      <div class="game__option">
+        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
       </div>
     </form>
     <div class="stats">
@@ -33,13 +31,11 @@ const html = `<div class="game">
   </div>`;
 
 const element = utils.getElementFromTemplate(html);
-const radioListNode = element.querySelectorAll(`input[type='radio']`);
+const optionListNode = element.querySelectorAll(`.game__option`);
 
-Array.from(radioListNode).forEach((item) => {
-  item.addEventListener(`change`, () => {
-    if (element.querySelector(`input[name="question1"]:checked`)) {
-      utils.showScreen(game3Screen, true);
-    }
+Array.from(optionListNode).forEach((item) => {
+  item.addEventListener(`click`, () => {
+    utils.showScreen(statsScreen, true);
   });
 });
 

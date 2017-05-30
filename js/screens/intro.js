@@ -1,4 +1,4 @@
-import greetingScreen from './greeting-screen';
+import greetingScreen from './greeting';
 import * as utils from '../utils';
 
 const html = `<div id="intro" class="intro">
@@ -9,9 +9,6 @@ const html = `<div id="intro" class="intro">
 const element = utils.getElementFromTemplate(html);
 const nextBtnNode = element.querySelector(`.intro__asterisk`);
 
-/**
- * Переход на следующий экран.
- */
 nextBtnNode.addEventListener(`click`, () => {
   utils.showScreen(greetingScreen);
 });
