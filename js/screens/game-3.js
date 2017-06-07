@@ -2,18 +2,18 @@ import game0Screen from './game-1';
 import statsScreen from './stats';
 import * as utils from '../utils';
 import {levels} from '../data';
-import getOption from '../game-option';
-import getStats from '../stats';
+import renderOption from '../game-option';
+import renderStats from '../stats';
 
 export default (state) => {
   const html = `<div class="game">
     <p class="game__task">${levels[state.level].description}</p>
     <form class="game__content  game__content--triple">
-      ${getOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}
-      ${getOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}
-      ${getOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}      
+      ${renderOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}
+      ${renderOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}
+      ${renderOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}      
     </form>
-    ${getStats(state.results)}
+    ${renderStats(state.results)}
   </div>`;
 
   const element = utils.getElementFromTemplate(html);

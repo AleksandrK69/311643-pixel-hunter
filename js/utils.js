@@ -1,4 +1,4 @@
-import {getHeader} from './header';
+import {renderHeader} from './header';
 
 const mainNode = document.querySelector(`main`);
 const mainCentralNode = mainNode.querySelector(`#main`);
@@ -22,7 +22,7 @@ export const showScreen = (element, header = false) => {
   }
 
   if (header) {
-    mainNode.insertBefore(getHeader(), mainCentralNode);
+    mainNode.insertBefore(renderHeader(), mainCentralNode);
   }
 
   // удалить все содержимое main
