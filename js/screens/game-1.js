@@ -1,7 +1,6 @@
 import game2Screen from './game-2';
 import statsScreen from './stats';
 import * as utils from '../utils';
-import {initialState} from '../data';
 import {levels} from '../data';
 import getOption from '../game-option';
 import getStats from '../stats';
