@@ -1,5 +1,6 @@
 import game1Screen from './game-1';
 import * as utils from '../utils';
+import {initialState} from '../data';
 
 const html = `<div class="rules">
     <h1 class="rules__title">Правила</h1>
@@ -27,7 +28,7 @@ nameNode.addEventListener(`input`, () => {
 });
 
 goBtnNode.addEventListener(`click`, () => {
-  utils.showScreen(game1Screen, true);
+  utils.showScreen(game1Screen(initialState), true);
 });
 
 export default element;

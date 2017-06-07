@@ -10,7 +10,9 @@ const clearMainElement = () => {
 };
 
 export const getElementFromTemplate = (html) => {
-  return new DOMParser().parseFromString(html, `text/html`).querySelector(`div`);
+  const container = document.createElement(`div`);
+  container.innerHTML = html;
+  return container.querySelector(`div`);
 };
 
 export const showScreen = (element, header = false) => {

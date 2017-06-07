@@ -1,44 +1,34 @@
 import game3Screen from './game-3';
+import statsScreen from './stats';
 import * as utils from '../utils';
+import {levels} from '../data';
+import getOption from '../game-option';
+import getStats from '../stats';
 
-const html = `<div class="game">
-    <p class="game__task">Угадай, фото или рисунок?</p>
+export default (state) => {
+  const html = `<div class="game">
+    <p class="game__task">${levels[state.level].description}</p>
     <form class="game__content  game__content--wide">
-      <div class="game__option">
-        <img src="http://placehold.it/705x455" alt="Option 1" width="705" height="455">
-        <label class="game__answer  game__answer--photo">
-          <input name="question1" type="radio" value="photo">
-          <span>Фото</span>
-        </label>
-        <label class="game__answer  game__answer--wide  game__answer--paint">
-          <input name="question1" type="radio" value="paint">
-          <span>Рисунок</span>
-        </label>
-      </div>
+      ${getOption(`http://placehold.it/705x455`, `Option 1`, 705, 455, `question1`)}      
     </form>
-    <div class="stats">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
-    </div>
+    ${getStats(state.results)}
   </div>`;
 
-const element = utils.getElementFromTemplate(html);
-const radioListNode = element.querySelectorAll(`input[type='radio']`);
+  const element = utils.getElementFromTemplate(html);
+  const radioListNode = element.querySelectorAll(`input[type='radio']`);
 
-Array.from(radioListNode).forEach((item) => {
-  item.addEventListener(`click`, () => {
-    utils.showScreen(game3Screen, true);
+  Array.from(radioListNode).forEach((item) => {
+    item.addEventListener(`click`, () => {
+      if (state.question - 1 > 0) {
+        utils.showScreen(game3Screen(Object.assign({}, state, {
+          level: levels[state.level].next,
+          question: state.question - 1
+        })), true);
+      } else {
+        utils.showScreen(statsScreen, true);
+      }
+    });
   });
-});
 
-export default element;
+  return element;
+};

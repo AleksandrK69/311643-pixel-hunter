@@ -1,42 +1,36 @@
+import game0Screen from './game-1';
 import statsScreen from './stats';
 import * as utils from '../utils';
+import {levels} from '../data';
+import getOption from '../game-option';
+import getStats from '../stats';
 
-const html = `<div class="game">
-    <p class="game__task">Найдите рисунок среди изображений</p>
+export default (state) => {
+  const html = `<div class="game">
+    <p class="game__task">${levels[state.level].description}</p>
     <form class="game__content  game__content--triple">
-      <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-      </div>
-      <div class="game__option  game__option--selected">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-      </div>
-      <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-      </div>
+      ${getOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}
+      ${getOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}
+      ${getOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}      
     </form>
-    <div class="stats">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
-    </div>
+    ${getStats(state.results)}
   </div>`;
 
-const element = utils.getElementFromTemplate(html);
-const optionListNode = element.querySelectorAll(`.game__option`);
+  const element = utils.getElementFromTemplate(html);
+  const optionListNode = element.querySelectorAll(`.game__option`);
 
-Array.from(optionListNode).forEach((item) => {
-  item.addEventListener(`click`, () => {
-    utils.showScreen(statsScreen, true);
+  Array.from(optionListNode).forEach((item) => {
+    item.addEventListener(`click`, () => {
+      if (state.question - 1 > 0) {
+        utils.showScreen(game0Screen(Object.assign({}, state, {
+          level: levels[state.level].next,
+          question: state.question - 1
+        })), true);
+      } else {
+        utils.showScreen(statsScreen, true);
+      }
+    });
   });
-});
 
-export default element;
+  return element;
+};
