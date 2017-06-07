@@ -1,9 +1,9 @@
 import game2Screen from './game-2';
-import statsScreen from './stats';
 import * as utils from '../utils';
-import {levels} from '../data';
 import renderOption from '../game-option';
 import renderStats from '../stats';
+import {levels} from '../data';
+import {changeGameScreen} from '../change-screen';
 
 export default (state) => {
   const html = `<div class="game">
@@ -24,15 +24,7 @@ export default (state) => {
       const question2Group = element.querySelector(`input[name="question2"]:checked`);
 
       if (question1Group && question2Group) {
-        const questionCount = state.question - 1;
-        if (questionCount > 0) {
-          utils.showScreen(game2Screen(Object.assign({}, state, {
-            level: levels[state.level].next,
-            question: questionCount
-          })), true);
-        } else {
-          utils.showScreen(statsScreen, true);
-        }
+        changeGameScreen(state, game2Screen);
       }
     });
   });

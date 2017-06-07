@@ -1,9 +1,9 @@
 import game0Screen from './game-1';
-import statsScreen from './stats';
 import * as utils from '../utils';
 import {levels} from '../data';
 import renderOption from '../game-option';
 import renderStats from '../stats';
+import {changeGameScreen} from '../change-screen';
 
 export default (state) => {
   const html = `<div class="game">
@@ -21,14 +21,7 @@ export default (state) => {
 
   Array.from(optionListNode).forEach((item) => {
     item.addEventListener(`click`, () => {
-      if (state.question - 1 > 0) {
-        utils.showScreen(game0Screen(Object.assign({}, state, {
-          level: levels[state.level].next,
-          question: state.question - 1
-        })), true);
-      } else {
-        utils.showScreen(statsScreen, true);
-      }
+      changeGameScreen(state, game0Screen);
     });
   });
 
