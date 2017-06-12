@@ -24,4 +24,4 @@ backBtnNode.addEventListener(`click`, () => {
   utils.showScreen(introScreen);
 });
 
-export const getHeader = () => headerElement;
+export const renderHeader = () => headerElement;

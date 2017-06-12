@@ -1,6 +1,6 @@
 import {getElementFromTemplate} from '../utils';
 
-const html = `<div class="result">
+const statisticHtml = `<div class="result">
     <h1>Победа!</h1>
     <table class="result__table">
       <tr>
@@ -101,5 +101,5 @@ const html = `<div class="result">
     </table>
   </div>`;
 
-export default getElementFromTemplate(html);
+export default getElementFromTemplate(statisticHtml);
 
