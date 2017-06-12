@@ -18,11 +18,12 @@ export default (state) => {
 
   const element = utils.getElementFromTemplate(html);
   const optionListNode = element.querySelectorAll(`.game__option`);
+  const clickImagehandler = () => {
+    changeGameScreen(state, game0Screen);
+  };
 
   Array.from(optionListNode).forEach((item) => {
-    item.addEventListener(`click`, () => {
-      changeGameScreen(state, game0Screen);
-    });
+    item.addEventListener(`click`, clickImagehandler);
   });
 
   return element;

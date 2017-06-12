@@ -12,7 +12,7 @@ export const initialState = Object.freeze({
 });
 
 export const levels = Object.freeze({
-  'level-0': {
+  [START_LEVEL]: {
     description: `Угадайте для каждого изображения фото или рисунок?`,
     next: `level-1`
   },
@@ -24,7 +24,7 @@ export const levels = Object.freeze({
 
   'level-2': {
     description: `Найдите рисунок среди изображений`,
-    next: `level-0`
+    next: START_LEVEL
   }
 });
 

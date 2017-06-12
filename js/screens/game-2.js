@@ -16,11 +16,12 @@ export default (state) => {
 
   const element = utils.getElementFromTemplate(html);
   const radioListNode = element.querySelectorAll(`input[type='radio']`);
+  const changeRadioHandler = () => {
+    changeGameScreen(state, game3Screen);
+  };
 
   Array.from(radioListNode).forEach((item) => {
-    item.addEventListener(`click`, () => {
-      changeGameScreen(state, game3Screen);
-    });
+    item.addEventListener(`click`, changeRadioHandler);
   });
 
   return element;

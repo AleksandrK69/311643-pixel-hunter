@@ -17,16 +17,17 @@ export default (state) => {
 
   const element = utils.getElementFromTemplate(html);
   const radioListNode = element.querySelectorAll(`input[type='radio']`);
+  const changeRadioHandler = () => {
+    const question1Group = element.querySelector(`input[name="question1"]:checked`);
+    const question2Group = element.querySelector(`input[name="question2"]:checked`);
+
+    if (question1Group && question2Group) {
+      changeGameScreen(state, game2Screen);
+    }
+  };
 
   Array.from(radioListNode).forEach((item) => {
-    item.addEventListener(`change`, () => {
-      const question1Group = element.querySelector(`input[name="question1"]:checked`);
-      const question2Group = element.querySelector(`input[name="question2"]:checked`);
-
-      if (question1Group && question2Group) {
-        changeGameScreen(state, game2Screen);
-      }
-    });
+    item.addEventListener(`change`, changeRadioHandler);
   });
 
   return element;
