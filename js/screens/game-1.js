@@ -2,7 +2,7 @@ import game2Screen from './game-2';
 import * as utils from '../utils';
 import renderOption from '../game-option';
 import renderStats from '../stats';
-import {levels} from '../data';
+import {levels} from '../data/data';
 import {changeGameScreen} from '../change-screen';
 
 export default (state) => {
