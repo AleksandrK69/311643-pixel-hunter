@@ -8,6 +8,12 @@ const ANSWER_POINT = 100;
 const QUICK_ANSWER_POINT = 50;
 const LATE_ANSWER_POINT = -50;
 
+const throwErrorIfInvalidRange = (time) => {
+  if (isNaN(time) || time < 0 || time > TIME_FOR_QUESTION) {
+    throw new RangeError(`Incorrect time. Time must be between 0...${TIME_FOR_QUESTION}.`);
+  }
+};
+
 export const initialState = Object.freeze({
   results: new Array(MAX_QUESTIONS).fill(`unknown`),
   level: START_LEVEL,
@@ -20,10 +26,7 @@ export const calculatePoints = (guess, time) => {
   if (typeof guess !== `boolean` || typeof time !== `number`) {
     throw new Error(`Parameters shouldn't be undefined or incorrect parameter type.`);
   }
-
-  if (isNaN(time) || time < 0 || time > TIME_FOR_QUESTION) {
-    throw new RangeError(`Incorrect time. Time must be between 0...${TIME_FOR_QUESTION}.`);
-  }
+  throwErrorIfInvalidRange(time);
 
   let points = 0;
   if (guess) {
@@ -48,8 +51,7 @@ export const setLives = (state, lives) => {
     throw new RangeError(`Lives must be between 0...${MAX_LIVES}.`);
   }
 
-  const newState = Object.assign({}, state);
-  newState.lives = lives;
+  const newState = Object.assign({}, state, {lives});
 
   return newState;
 };
@@ -59,12 +61,9 @@ export const setTime = (state, time) => {
     throw new Error(`Parameters shouldn't be undefined or incorrect parameter type.`);
   }
 
-  if (isNaN(time) || time < 0 || time > TIME_FOR_QUESTION) {
-    throw new RangeError(`Time must be between 0...${TIME_FOR_QUESTION}.`);
-  }
+  throwErrorIfInvalidRange(time);
 
-  const newState = Object.assign({}, state);
-  newState.time = time;
+  const newState = Object.assign({}, state, {time});
 
   return newState;
 };
