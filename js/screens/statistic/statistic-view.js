@@ -1,6 +1,9 @@
-import {getElementFromTemplate} from '../utils';
+import AbstractView from '../../abstract-view';
 
-const statisticHtml = `<div class="result">
+export default class extends AbstractView {
+
+  get template() {
+    return `<div class="result">
     <h1>Победа!</h1>
     <table class="result__table">
       <tr>
@@ -100,6 +103,6 @@ const statisticHtml = `<div class="result">
       </tr>
     </table>
   </div>`;
-
-export default getElementFromTemplate(statisticHtml);
+  }
+}
 

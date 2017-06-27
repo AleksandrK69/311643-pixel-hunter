@@ -1,7 +1,8 @@
-import rulesScreen from './rules';
-import * as utils from '../utils';
+import AbstractView from '../../abstract-view';
 
-const html = `<div class="greeting central--blur">
+export default class extends AbstractView {
+  get template() {
+    return `<div class="greeting central--blur">
     <div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>
     <h1 class="greeting__asterisk">*</h1>
     <div class="greeting__challenge">
@@ -14,12 +15,17 @@ const html = `<div class="greeting central--blur">
     </div>
     <div class="greeting__continue"><span><img src="img/arrow_right.svg" width="64" height="64" alt="Next"></span></div>
   </div>`;
+  }
 
-const element = utils.getElementFromTemplate(html);
-const nextBtnNode = element.querySelector(`.greeting__continue`);
+  bind() {
+    const nextBtnNode = this.element.querySelector(`.greeting__continue`);
 
-nextBtnNode.addEventListener(`click`, () => {
-  utils.showScreen(rulesScreen, true);
-});
+    nextBtnNode.addEventListener(`click`, () => {
+      this.onNext();
+    });
+  }
 
-export default element;
+  onNext() {
+
+  }
+}
