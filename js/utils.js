@@ -1,32 +1,16 @@
-import {renderHeader} from './header';
+export const resizeImage = (frame, image) => {
+  let multiplier = 1;
 
-const mainNode = document.querySelector(`main`);
-const mainCentralNode = mainNode.querySelector(`#main`);
-
-const clearMainElement = () => {
-  while (mainCentralNode.lastChild) {
-    mainCentralNode.removeChild(mainCentralNode.lastChild);
-  }
-};
-
-export const getElementFromTemplate = (html) => {
-  const container = document.createElement(`div`);
-  container.innerHTML = html;
-  return container.querySelector(`div`);
-};
-
-export const showScreen = (element, header = false) => {
-  const headerNode = mainNode.querySelector(`header`);
-  if (headerNode) {
-    mainNode.removeChild(headerNode);
+  if (image.width > frame.width) {
+    multiplier = frame.width / image.width;
   }
 
-  if (header) {
-    mainNode.insertBefore(renderHeader(), mainCentralNode);
+  if (image.height * multiplier > frame.height) {
+    multiplier = frame.height / image.height;
   }
 
-  // удалить все содержимое main
-  clearMainElement();
-  // добавить элемент на экран
-  mainCentralNode.appendChild(element);
+  return {
+    width: image.width * multiplier,
+    height: image.height * multiplier
+  };
 };

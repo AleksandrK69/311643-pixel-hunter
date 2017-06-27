@@ -1,10 +1,10 @@
 import assert from 'assert';
 
-import {resize} from './resize';
+import {resizeImage} from './utils';
 
 const createTestForFrame = (frame) => {
   const assertRatio = (given, expected) => {
-    const actual = resize(frame, given);
+    const actual = resizeImage(frame, given);
     assert.deepEqual(actual, expected);
   };
 
