@@ -11,9 +11,7 @@ export default class extends AbstractView {
   bind() {
     const nextBtnNode = this.element.querySelector(`.intro__asterisk`);
 
-    nextBtnNode.addEventListener(`click`, () => {
-      this.onStart();
-    });
+    nextBtnNode.addEventListener(`click`, this.onStart.bind(this));
   }
 
   onStart() {
