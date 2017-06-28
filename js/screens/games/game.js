@@ -13,10 +13,6 @@ export default class {
     this._gameScreen = 0;
   }
 
-  init() {
-    this._screen.show();
-  }
-
   get _screen() {
     if (!this._currentGameScreen) {
       this._currentGameScreen = this._createGameScreen(this._state);
@@ -25,12 +21,18 @@ export default class {
     return this._currentGameScreen;
   }
 
+  init() {
+    this._screen.show();
+  }
+
   _createGameScreen(state) {
-    const screen = new this._gameScreensList[this._gameScreen++ % this._gameScreensList.length](state);
+    const screen = new this._gameScreensList[this._gameScreen % this._gameScreensList.length](state);
 
     screen.onChangeGameScreen = () => {
       this._checkAnswer();
     };
+
+    this._gameScreen++;
 
     return screen;
   }

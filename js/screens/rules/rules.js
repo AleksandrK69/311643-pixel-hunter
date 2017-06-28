@@ -5,14 +5,14 @@ export default class {
 
   constructor() {
     this._view = new RulesView();
-
-    this._view.onStartGame = () => {
-      Application.showGame();
-    };
   }
 
   init() {
     this._view.show();
+
+    this._view.onStartGame = () => {
+      Application.showGame();
+    };
   }
 
 }
