@@ -15,7 +15,7 @@ const throwErrorIfInvalidRange = (time) => {
 };
 
 export const initialState = Object.freeze({
-  results: new Array(MAX_QUESTIONS).fill(`unknown`),
+  results: [],
   level: START_LEVEL,
   lives: MAX_LIVES,
   question: MAX_QUESTIONS,

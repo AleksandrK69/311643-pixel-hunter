@@ -1,5 +1,6 @@
 import RulesView from './rules-view';
 import Application from '../../application';
+import {onBack} from '../../header/header';
 
 export default class {
 
@@ -13,6 +14,8 @@ export default class {
     this._view.onStartGame = () => {
       Application.showGame();
     };
+
+    this._view.onBack = onBack;
   }
 
 }

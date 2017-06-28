@@ -10,6 +10,7 @@ export default class AbstractView {
       this._element = this._render();
       this.bind();
     }
+
     return this._element;
   }
 
@@ -18,10 +19,10 @@ export default class AbstractView {
   }
 
   _getElementFromTemplate(html) {
-    const container = document.createElement(`div`);
+    const container = document.createElement(`template`);
     container.innerHTML = html;
 
-    return container.querySelector(`div`);
+    return container.content;
   }
 
   show() {
