@@ -72,7 +72,7 @@ export default class {
     } else {
       Application.showPreloader();
       StatisticModel.send({lives: state.lives, stats: state.stats})
-        .then(() => Application.showStatistic(this._state));
+        .then(() => Application.showStatistic());
     }
   }
 
