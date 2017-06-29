@@ -2,6 +2,7 @@ import AbstractView from '../../abstract-view';
 import {levels} from '../../data/data';
 import renderOption from '../../game-option';
 import renderStats from '../../stats';
+import renderHeader from '../../header/header';
 
 export default class extends AbstractView {
 
@@ -12,7 +13,9 @@ export default class extends AbstractView {
   }
 
   get template() {
-    return `<div class="game">
+    return `
+    ${renderHeader(this._state)}
+    <div class="game">
     <p class="game__task">${levels[this._state.level].description}</p>
     <form class="game__content">      
       ${renderOption(`http://placehold.it/468x458`, `Option 1`, 468, 458, `question1`)}
@@ -23,24 +26,42 @@ export default class extends AbstractView {
   }
 
   bind() {
-    const radioListNode = this.element.querySelectorAll(`input[type='radio']`);
+    const backBtnNode = this.element.querySelector(`.back`);
+    this._timerNode = this.element.querySelector(`.game__timer`);
+    const gameContentNode = this.element.querySelector(`.game__content`);
+    const radioListNode = gameContentNode.querySelectorAll(`input[type='radio']`);
+
     const changeRadioHandler = (evt) => {
       evt.preventDefault();
 
-      const question1Group = this.element.querySelector(`input[name="question1"]:checked`);
-      const question2Group = this.element.querySelector(`input[name="question2"]:checked`);
+      const question1Group = gameContentNode.querySelector(`input[name="question1"]:checked`);
+      const question2Group = gameContentNode.querySelector(`input[name="question2"]:checked`);
 
       if (question1Group && question2Group) {
-        this.onChangeGameScreen();
+        this.onAnswer();
       }
     };
 
+    backBtnNode.addEventListener(`click`, () => {
+      this.onBack();
+    });
+
     Array.from(radioListNode).forEach((item) => {
-      item.addEventListener(`change`, changeRadioHandler);
+      item.addEventListener(`change`, (evt) => {
+        changeRadioHandler(evt);
+      });
     });
   }
 
-  onChangeGameScreen() {
+  updateTimer(time) {
+    this._timerNode.innerHTML = time;
+  }
+
+  onAnswer() {
+
+  }
+
+  onBack() {
 
   }
 

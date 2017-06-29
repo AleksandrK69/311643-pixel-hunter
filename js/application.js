@@ -4,37 +4,65 @@ import Rules from './screens/rules/rules';
 import Game from './screens/games/game';
 import Statistic from './screens/statistic/statistic';
 
-export default new class {
+const GameState = {
+  WELCOME: ``,
+  GREETING: `greeting`,
+  RULES: `rules`,
+  GAME: `game`,
+  STATISTIC: `stats`
+};
+
+const getGameStateFromHash = (hash) => hash.replace(`#`, ``);
+
+class Application {
   constructor() {
-    this._welcome = new Welcome();
-    this._greeting = new Greeting();
-    this._rules = new Rules();
-    this._game = new Game();
-    this._statistic = new Statistic();
+    this._routes = {
+      [GameState.WELCOME]: Welcome,
+      [GameState.GREETING]: Greeting,
+      [GameState.RULES]: Rules,
+      [GameState.GAME]: Game,
+      [GameState.STATISTIC]: Statistic
+    };
+
+    window.onhashchange = () => {
+      this._changeGameState(getGameStateFromHash(location.hash));
+    };
   }
 
   init() {
-    this.showWelcome();
+    this._changeGameState(getGameStateFromHash(location.hash));
   }
 
   showWelcome() {
-    this._welcome.init();
+    location.hash = GameState.WELCOME;
   }
 
   showGreeting() {
-    this._greeting.init();
+    location.hash = GameState.GREETING;
   }
 
   showRules() {
-    this._rules.init();
+    location.hash = GameState.RULES;
   }
 
   showGame() {
-    this._game.init();
+    location.hash = GameState.GAME;
   }
 
-  showStatistic() {
-    this._statistic.init();
+  showStatistic(stats) {
+    location.hash = GameState.STATISTIC;
   }
 
-}();
+  _changeGameState(route = GameState.WELCOME) {
+    const GameStateClass = this._routes[route];
+
+    if (!GameStateClass) {
+      return;
+    }
+    new GameStateClass().init();
+  }
+
+}
+
+const app = new Application();
+export default app;
