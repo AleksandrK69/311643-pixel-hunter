@@ -7,11 +7,15 @@ export default class AbstractView {
 
   get element() {
     if (!this._element) {
-      this._element = this._render();
+      this._element = this._getMarkup();
       this.bind();
     }
 
     return this._element;
+  }
+
+  _getMarkup() {
+    return this._render();
   }
 
   _render() {
