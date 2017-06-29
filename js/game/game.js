@@ -1,4 +1,4 @@
-const MAX_QUESTIONS = 10;
+export const MAX_QUESTIONS = 10;
 const MAX_LIVES = 3;
 const TIME_FOR_QUESTION = 30;
 const START_LEVEL = `level-0`;
@@ -18,7 +18,7 @@ export const initialState = Object.freeze({
   results: [],
   level: START_LEVEL,
   lives: MAX_LIVES,
-  question: MAX_QUESTIONS,
+  question: 0,
   time: TIME_FOR_QUESTION
 });
 

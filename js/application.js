@@ -1,8 +1,11 @@
+import Preloader from './screens/preloader/preloader';
 import Welcome from './screens/welcome/welcome';
 import Greeting from './screens/greeting/greeting';
 import Rules from './screens/rules/rules';
 import Game from './screens/games/game';
 import Statistic from './screens/statistic/statistic';
+import AbstractModel from './abstract-model';
+import {preloadImages} from './utils';
 
 const GameState = {
   WELCOME: ``,
@@ -16,21 +19,26 @@ const getGameStateFromHash = (hash) => hash.replace(`#`, ``);
 
 class Application {
   constructor() {
-    this._routes = {
-      [GameState.WELCOME]: Welcome,
-      [GameState.GREETING]: Greeting,
-      [GameState.RULES]: Rules,
-      [GameState.GAME]: Game,
-      [GameState.STATISTIC]: Statistic
-    };
-
-    window.onhashchange = () => {
-      this._changeGameState(getGameStateFromHash(location.hash));
-    };
+    this._model = new class extends AbstractModel {
+      get urlRead() {
+        return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions`;
+      }
+    }();
   }
 
   init() {
-    this._changeGameState(getGameStateFromHash(location.hash));
+    this.showPreloader();
+
+    this._model.load()
+      .then((data) => {
+        preloadImages(data)
+          .then(() => this._setup(data))
+          .then(() => this._changeGameState(getGameStateFromHash(location.hash)));
+      });
+  }
+
+  showPreloader() {
+    new Preloader().init();
   }
 
   showWelcome() {
@@ -59,7 +67,23 @@ class Application {
     if (!GameStateClass) {
       return;
     }
-    new GameStateClass().init();
+    GameStateClass.init();
+  }
+
+  _setup(data) {
+    this._routes = {
+      [GameState.WELCOME]: new Welcome(),
+      [GameState.GREETING]: new Greeting(),
+      [GameState.RULES]: new Rules(),
+      [GameState.GAME]: new Game(data),
+      [GameState.STATISTIC]: new Statistic()
+    };
+
+    window.onhashchange = () => {
+      this._changeGameState(getGameStateFromHash(location.hash));
+    };
+
+    return data;
   }
 
 }
