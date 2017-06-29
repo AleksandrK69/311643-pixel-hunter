@@ -5,9 +5,10 @@ const MAX_LIVES = 3;
 export const TIME_FOR_QUESTION = 30;
 export const QUICK_ANSWER_TIME = 10;
 export const LATE_ANSWER_TIME = 20;
-const ANSWER_POINT = 100;
-const QUICK_ANSWER_POINT = 50;
-const LATE_ANSWER_POINT = -50;
+export const ANSWER_POINT = 100;
+export const QUICK_ANSWER_POINT = 50;
+export const LATE_ANSWER_POINT = -50;
+export const LIVE_POINT = 50;
 
 const throwErrorIfInvalidRange = (time) => {
   if (isNaN(time) || time < 0 || time > TIME_FOR_QUESTION) {
