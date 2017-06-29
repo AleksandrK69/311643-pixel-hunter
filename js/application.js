@@ -58,16 +58,26 @@ class Application {
   }
 
   showStatistic(stats) {
-    location.hash = GameState.STATISTIC;
+    location.hash = `${GameState.STATISTIC}=${stats ? JSON.stringify(stats) : ``}`;
   }
 
   _changeGameState(route = GameState.WELCOME) {
-    const GameStateClass = this._routes[route];
+    const address = route.split(`=`);
+    const GameStateClass = this._routes[address[0]];
 
     if (!GameStateClass) {
       return;
     }
-    GameStateClass.init();
+
+    switch (address[0]) {
+      case GameState.STATISTIC:
+        GameStateClass.init(JSON.parse(address[1]));
+        break;
+      default:
+        GameStateClass.init();
+        break;
+    }
+
   }
 
   _setup(data) {

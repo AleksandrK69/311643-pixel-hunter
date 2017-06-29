@@ -21,7 +21,9 @@ export default class extends AbstractView {
       ${renderOption(this._question.answers[0], `Option 1`, `question1`)}
       ${renderOption(this._question.answers[1], `Option 2`, `question2`)}
     </form>
-    ${renderStats(this._state.results)}
+    <div class="stats">
+    ${renderStats(this._state.stats)}
+    </div>
   </div>`;
   }
 

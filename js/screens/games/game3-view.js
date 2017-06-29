@@ -1,9 +1,7 @@
 import AbstractView from '../../abstract-view';
-import {levels} from '../../game/game';
 import renderOption from '../../game-option';
 import renderStats from '../../stats';
 import renderHeader from '../../header/header';
-import {resizeImage} from '../../utils';
 
 export default class extends AbstractView {
 
@@ -24,7 +22,9 @@ export default class extends AbstractView {
       ${renderOption(this._question.answers[1], `Option 1`, null, 1)}
       ${renderOption(this._question.answers[2], `Option 1`, null, 2)}      
     </form>
-    ${renderStats(this._state.results)}
+    <div class="stats">
+    ${renderStats(this._state.stats)}
+    </div>
   </div>`;
   }
 

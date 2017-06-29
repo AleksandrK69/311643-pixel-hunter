@@ -2,7 +2,6 @@ import AbstractView from '../../abstract-view';
 import renderOption from '../../game-option';
 import renderStats from '../../stats';
 import renderHeader from '../../header/header';
-import {resizeImage} from '../../utils';
 
 export default class extends AbstractView {
 
@@ -21,7 +20,9 @@ export default class extends AbstractView {
     <form class="game__content  game__content--wide">
       ${renderOption(this._question.answers[0], `Option 1`, `question1`)}
     </form>
-    ${renderStats(this._state.results)}
+    <div class="stats">
+    ${renderStats(this._state.stats)}
+    </div>
   </div>`;
   }
 

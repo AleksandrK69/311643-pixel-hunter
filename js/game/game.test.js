@@ -1,12 +1,13 @@
 import assert from 'assert';
 import {initialState, calculatePoints, setLives, setTime} from './game';
+import ResultType from '../enums/result-type';
 
 describe(`Game`, () => {
   describe(`calculate points`, () => {
 
     describe(`incorrect data`, () => {
-      const testWithIncorrectParams = (guess, time) => {
-        calculatePoints(guess, time);
+      const testWithIncorrectParams = (answer) => {
+        calculatePoints(answer);
       };
 
       const shouldThrowError = () => {
@@ -16,78 +17,44 @@ describe(`Game`, () => {
         }, Error);
 
         assert.throws(() => {
-          testWithIncorrectParams(0, 1);
+          testWithIncorrectParams(0);
         }, Error);
 
         assert.throws(() => {
-          testWithIncorrectParams({}, 1);
+          testWithIncorrectParams({});
         }, Error);
 
         assert.throws(() => {
-          testWithIncorrectParams([], 1);
+          testWithIncorrectParams([]);
         }, Error);
 
         assert.throws(() => {
-          testWithIncorrectParams(`string`, 1);
+          testWithIncorrectParams(NaN);
         }, Error);
 
         assert.throws(() => {
-          testWithIncorrectParams(NaN, 1);
-        }, Error);
-
-        assert.throws(() => {
-          testWithIncorrectParams(null, 1);
-        }, Error);
-
-        assert.throws(() => {
-          testWithIncorrectParams(false, {});
-        }, Error);
-
-        assert.throws(() => {
-          testWithIncorrectParams(false, []);
-        }, Error);
-
-        assert.throws(() => {
-          testWithIncorrectParams(false, `string`);
-        }, Error);
-
-        assert.throws(() => {
-          testWithIncorrectParams(false, null);
+          testWithIncorrectParams(null);
         }, Error);
       };
 
       it(`should throw error`, shouldThrowError);
-
-      it(`should throw range error`, () => {
-        assert.throws(() => {
-          testWithIncorrectParams(false, -1);
-        }, RangeError);
-
-        assert.throws(() => {
-          testWithIncorrectParams(false, 31);
-        }, RangeError);
-
-        assert.throws(() => {
-          testWithIncorrectParams(false, NaN);
-        }, RangeError);
-      });
     });
 
     describe(`should calculate points`, () => {
       it(`should wrong answer`, () => {
-        assert.equal(calculatePoints(false, 10), 0);
+        assert.equal(calculatePoints(ResultType.WRONG), 0);
       });
 
       it(`should correct answer`, () => {
-        assert.equal(calculatePoints(true, 10), 100);
+        assert.equal(calculatePoints(ResultType.CORRECT), 100);
       });
 
       it(`should quick answer`, () => {
-        assert.equal(calculatePoints(true, 9), 150);
+        assert.equal(calculatePoints(ResultType.FAST), 150);
       });
 
       it(`should late answer`, () => {
-        assert.equal(calculatePoints(true, 20), 50);
+        assert.equal(calculatePoints(ResultType.SLOW), 50);
       });
     });
 
@@ -102,7 +69,7 @@ describe(`Game`, () => {
       it(`should throw error`, () => {
         assert.throws(incorrectLivesParams, Error);
         assert.throws(() => {
-          incorrectLivesParams(initialState);
+          incorrectLivesParams(initialState());
         }, Error);
 
         assert.throws(() => {
@@ -130,45 +97,45 @@ describe(`Game`, () => {
         }, Error);
 
         assert.throws(() => {
-          incorrectLivesParams(initialState, {});
+          incorrectLivesParams(initialState(), {});
         }, Error);
 
         assert.throws(() => {
-          incorrectLivesParams(initialState, []);
+          incorrectLivesParams(initialState(), []);
         }, Error);
 
         assert.throws(() => {
-          incorrectLivesParams(initialState, null);
+          incorrectLivesParams(initialState(), null);
         }, Error);
 
         assert.throws(() => {
-          incorrectLivesParams(initialState, `string`);
+          incorrectLivesParams(initialState(), `string`);
         }, Error);
       });
 
       it(`should throw range error`, () => {
         assert.throws(() => {
-          incorrectLivesParams(initialState, -1);
+          incorrectLivesParams(initialState(), -1);
         }, RangeError);
 
         assert.throws(() => {
-          incorrectLivesParams(initialState, 4);
+          incorrectLivesParams(initialState(), 4);
         }, RangeError);
 
         assert.throws(() => {
-          incorrectLivesParams(initialState, NaN);
+          incorrectLivesParams(initialState(), NaN);
         }, RangeError);
       });
     });
 
     it(`should update lives`, ()=> {
-      assert.equal(setLives(initialState, 2).lives, 2);
-      assert.equal(setLives(initialState, 1).lives, 1);
-      assert.equal(setLives(initialState, 0).lives, 0);
+      assert.equal(setLives(initialState(), 2).lives, 2);
+      assert.equal(setLives(initialState(), 1).lives, 1);
+      assert.equal(setLives(initialState(), 0).lives, 0);
     });
 
     it(`check start value`, () => {
-      assert.equal(initialState.lives, 3);
+      assert.equal(initialState().lives, 3);
     });
 
   });
@@ -182,7 +149,7 @@ describe(`Game`, () => {
       it(`should throw error`, () => {
         assert.throws(incorrectTimeParams, Error);
         assert.throws(() => {
-          incorrectTimeParams(initialState);
+          incorrectTimeParams(initialState());
         }, Error);
 
         assert.throws(() => {
@@ -210,44 +177,44 @@ describe(`Game`, () => {
         }, Error);
 
         assert.throws(() => {
-          incorrectTimeParams(initialState, {});
+          incorrectTimeParams(initialState(), {});
         }, Error);
 
         assert.throws(() => {
-          incorrectTimeParams(initialState, []);
+          incorrectTimeParams(initialState(), []);
         }, Error);
 
         assert.throws(() => {
-          incorrectTimeParams(initialState, null);
+          incorrectTimeParams(initialState(), null);
         }, Error);
 
         assert.throws(() => {
-          incorrectTimeParams(initialState, `string`);
+          incorrectTimeParams(initialState(), `string`);
         }, Error);
       });
 
       it(`should throw range error`, () => {
         assert.throws(() => {
-          incorrectTimeParams(initialState, -1);
+          incorrectTimeParams(initialState(), -1);
         }, RangeError);
 
         assert.throws(() => {
-          incorrectTimeParams(initialState, 31);
+          incorrectTimeParams(initialState(), 31);
         }, RangeError);
 
         assert.throws(() => {
-          incorrectTimeParams(initialState, NaN);
+          incorrectTimeParams(initialState(), NaN);
         }, RangeError);
       });
 
     });
 
     it(`should update timer`, ()=> {
-      assert.equal(setTime(initialState, 2).time, 2);
+      assert.equal(setTime(initialState(), 2).time, 2);
     });
 
     it(`check start value`, () => {
-      assert.equal(initialState.time, 30);
+      assert.equal(initialState().time, 30);
     });
 
   });
