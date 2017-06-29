@@ -41,10 +41,6 @@ class Application {
     new Preloader().init();
   }
 
-  showWelcome() {
-    location.hash = GameState.WELCOME;
-  }
-
   showGreeting() {
     location.hash = GameState.GREETING;
   }
