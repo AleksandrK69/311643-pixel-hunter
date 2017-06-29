@@ -1,4 +1,4 @@
-import {initialState} from '../data/data';
+import {initialState} from '../game/game';
 import Application from '../application';
 
 const createHeart = (count, type) => {
@@ -17,7 +17,7 @@ const createGameStats = ({lives, time}) => {
 };
 
 export const onBack = () => {
-  Application.showWelcome();
+  Application.showGreeting();
 };
 
 export default (state = null) => {

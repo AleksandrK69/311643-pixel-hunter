@@ -1,8 +1,8 @@
 import renderAnswer from './game-answer';
 
-export default (image, alt, width, height, answerGroupName) => {
-  const optionHtml = `<div class="game__option">
-        <img src="${image}" alt="${alt}" width="${width}" height="${height}">
+export default (question, alt, answerGroupName, index) => {
+  const optionHtml = `<div class="game__option" data-index="${index}">
+        <img src="${question.image.url}" alt="${alt}" width="${question.image.size.width}" height="${question.image.size.height}">
         ${answerGroupName ? renderAnswer(answerGroupName) : ``}
       </div>`;
 

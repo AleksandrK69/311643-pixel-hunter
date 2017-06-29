@@ -3,11 +3,8 @@ import {onBack} from '../../header/header';
 
 export default class {
 
-  constructor() {
-    this._view = new StatisticView();
-  }
-
   init() {
+    this._view = new StatisticView();
     this._view.show();
 
     this._view.onBack = onBack;

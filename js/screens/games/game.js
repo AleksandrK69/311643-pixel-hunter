@@ -1,27 +1,40 @@
 import Game1View from './game1-view';
 import Game2View from './game2-view';
 import Game3View from './game3-view';
-import {levels} from '../../data/data';
-import {initialState, setTime, setLives} from '../../data/data';
+import {levels} from '../../game/game';
+import {MAX_QUESTIONS, initialState, setTime, setLives} from '../../game/game';
 import Application from '../../application';
+
+
+const QuestionType = {
+  TWO_OF_TWO: `two-of-two`,
+  TINDER_LIKE: `tinder-like`,
+  ONE_OF_THREE: `one-of-three`
+};
 
 export default class {
 
-  constructor(state = Object.assign({}, initialState)) {
-    this._state = state;
+  constructor(data) {
+    this._questionsList = data;
 
-    this._gameScreensList = [Game1View, Game2View, Game3View];
-    this._gameScreen = 0;
+    this._gameViewsList = {
+      [QuestionType.TWO_OF_TWO]: Game1View,
+      [QuestionType.TINDER_LIKE]: Game2View,
+      [QuestionType.ONE_OF_THREE]: Game3View
+    };
   }
 
   init() {
-    this._view = this._createView(initialState);
+    this._state = Object.assign({}, initialState);
+    this._gameScreen = 0;
+
+    this._view = this._createView(initialState, this._getQuestion());
     this._view.show();
     this._startTimer();
   }
 
   _createView(state) {
-    const view = new this._gameScreensList[this._gameScreen % this._gameScreensList.length](state);
+    const view = new this._gameViewsList[this._getQuestion().type](state, this._getQuestion());
 
     view.onAnswer = (isCorrectAnswer) => {
       this._stopTimer();
@@ -32,7 +45,7 @@ export default class {
     view.onBack = () => {
       this._stopTimer();
 
-      Application.showWelcome();
+      Application.showGreeting();
     };
 
     this._gameScreen++;
@@ -50,13 +63,13 @@ export default class {
       time: this._state.time
     });
     this._state.level = levels[this._state.level].next;
-    this._state.question--;
+    this._state.question++;
 
     this._changeScreen(this._state);
   }
 
   _changeScreen(state) {
-    if (state.question > 0 && state.lives > 0) {
+    if (state.question < MAX_QUESTIONS && state.lives > 0) {
       this._state = Object.assign({}, this._state, {time: initialState.time});
 
       this._view = this._createView(this._state);
@@ -88,6 +101,10 @@ export default class {
     }
 
     clearInterval(this._timer);
+  }
+
+  _getQuestion() {
+    return this._questionsList[this._state.question];
   }
 
 }

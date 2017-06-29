@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {initialState, calculatePoints, setLives, setTime} from './data';
+import {initialState, calculatePoints, setLives, setTime} from './game';
 
 describe(`Game`, () => {
   describe(`calculate points`, () => {
