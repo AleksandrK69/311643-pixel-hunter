@@ -4,16 +4,13 @@ import StatisticModel from '../statistic/statistic-model';
 
 export default class {
 
-  init(stats) {
+  init() {
+    StatisticModel.load()
+      .then((data) => {
+        this._view = new StatisticView(data);
+        this._view.show();
 
-      StatisticModel.load()
-        .then((data) => {
-          this._view = new StatisticView(data);
-          this._view.show();
-
-          this._view.onBack = onBack;
-        });
-
-
+        this._view.onBack = onBack;
+      });
   }
 }

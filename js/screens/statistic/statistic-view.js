@@ -33,19 +33,16 @@ export default class extends AbstractView {
     super();
 
     this._stats = stats.reverse();
-
-    console.log(this._stats);
   }
 
   get template() {
     return `
       ${renderHeader()}
       <div class="result">
-      <h1>${this._stats[0].lives > 0 ? 'Победа!' : 'Проигрышь:('}</h1>
+      <h1>${this._stats[0].lives > 0 ? `Победа!` : `Проигрышь:(`}</h1>
       
       ${this._stats.map((game, index) => {
         const gameStats = calculateTotalPoints(game);
-        
         return `
           <table class="result__table">
             <tr>
@@ -54,7 +51,7 @@ export default class extends AbstractView {
                 ${renderStats(game.stats)}
               </td>         
               ${game.lives > 0 ? `<td class="result__points">×&nbsp;${ANSWER_POINT}</td>
-                                  <td class="result__total">${ANSWER_POINT * gameStats.normal}</td>` : 
+                                  <td class="result__total">${ANSWER_POINT * gameStats.normal}</td>` :
                                  `<td class="result__points"></td>
                                   <td class="result__total result__total--final">FAIL</td>`}          
               
@@ -91,7 +88,7 @@ export default class extends AbstractView {
                                 </tr>` : ``}
             
             
-          </table>`
+          </table>`;
       }).join(``)}
       </div>`.trim();
   }
