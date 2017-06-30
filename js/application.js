@@ -34,7 +34,7 @@ class Application {
         preloadImages(data)
           .then(() => this._setup(data))
           .then(() => this._changeGameState(getGameStateFromHash(location.hash)));
-      }).catch(console.error);
+      }).catch(window.console.error);
   }
 
   showPreloader() {
