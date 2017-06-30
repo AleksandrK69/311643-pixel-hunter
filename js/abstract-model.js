@@ -1,6 +1,6 @@
 import DefaultAdapter from './adapters/default-adapter';
 
-const defaultAdapter = new class extends DefaultAdapter {}();
+const defaultAdapter = new DefaultAdapter();
 
 export default class AbstractModel {
   get urlRead() {

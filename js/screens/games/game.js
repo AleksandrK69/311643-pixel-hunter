@@ -1,10 +1,10 @@
 import Game1View from './game1-view';
 import Game2View from './game2-view';
 import Game3View from './game3-view';
-import {levels} from '../../game/game';
-import {MAX_QUESTIONS, initialState, setTime, setLives} from '../../game/game';
+import {TIME_FOR_QUESTION, QUICK_ANSWER_TIME, LATE_ANSWER_TIME, MAX_QUESTIONS, getInitialState, setTime, setLives} from '../../game/game';
 import Application from '../../application';
-
+import ResultType from '../../enums/result-type';
+import StatisticModel from '../statistic/statistic-model';
 
 const QuestionType = {
   TWO_OF_TWO: `two-of-two`,
@@ -25,10 +25,9 @@ export default class {
   }
 
   init() {
-    this._state = Object.assign({}, initialState);
-    this._gameScreen = 0;
+    this._state = getInitialState();
 
-    this._view = this._createView(initialState, this._getQuestion());
+    this._view = this._createView(getInitialState(), this._getQuestion());
     this._view.show();
     this._startTimer();
   }
@@ -48,8 +47,6 @@ export default class {
       Application.showGreeting();
     };
 
-    this._gameScreen++;
-
     return view;
   }
 
@@ -58,11 +55,7 @@ export default class {
       this._state = setLives(this._state, this._state.lives - 1);
     }
 
-    this._state.results.push({
-      guess: isCorrectAnswer,
-      time: this._state.time
-    });
-    this._state.level = levels[this._state.level].next;
+    this._state.stats.push(this._getResult(isCorrectAnswer));
     this._state.question++;
 
     this._changeScreen(this._state);
@@ -70,6 +63,8 @@ export default class {
 
   _changeScreen(state) {
     if (state.question < MAX_QUESTIONS && state.lives > 0) {
+      const initialState = getInitialState();
+
       this._state = Object.assign({}, this._state, {time: initialState.time});
 
       this._view = this._createView(this._state);
@@ -77,7 +72,9 @@ export default class {
       this._startTimer();
 
     } else {
-      Application.showStatistic(this._state);
+      Application.showPreloader();
+      StatisticModel.send({lives: state.lives, stats: state.stats})
+        .then(() => Application.showStatistic());
     }
   }
 
@@ -105,6 +102,22 @@ export default class {
 
   _getQuestion() {
     return this._questionsList[this._state.question];
+  }
+
+  _getResult(isCorrectAnswer) {
+    let str;
+
+    if (!isCorrectAnswer) {
+      str = ResultType.WRONG;
+    } else if (TIME_FOR_QUESTION - this._state.time < QUICK_ANSWER_TIME) {
+      str = ResultType.FAST;
+    } else if (TIME_FOR_QUESTION - this._state.time > LATE_ANSWER_TIME) {
+      str = ResultType.SLOW;
+    } else {
+      str = ResultType.CORRECT;
+    }
+
+    return str;
   }
 
 }

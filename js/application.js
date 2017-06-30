@@ -34,15 +34,11 @@ class Application {
         preloadImages(data)
           .then(() => this._setup(data))
           .then(() => this._changeGameState(getGameStateFromHash(location.hash)));
-      });
+      }).catch(window.console.error);
   }
 
   showPreloader() {
     new Preloader().init();
-  }
-
-  showWelcome() {
-    location.hash = GameState.WELCOME;
   }
 
   showGreeting() {
@@ -57,7 +53,7 @@ class Application {
     location.hash = GameState.GAME;
   }
 
-  showStatistic(stats) {
+  showStatistic() {
     location.hash = GameState.STATISTIC;
   }
 
@@ -67,6 +63,7 @@ class Application {
     if (!GameStateClass) {
       return;
     }
+
     GameStateClass.init();
   }
 

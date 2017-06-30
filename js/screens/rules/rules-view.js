@@ -34,7 +34,7 @@ export default class extends AbstractView {
 
     goBtnNode.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      this.onStartGame();
+      this.onStartGame(nameNode.value);
     });
 
     backBtnNode.addEventListener(`click`, () => {
@@ -42,7 +42,7 @@ export default class extends AbstractView {
     });
   }
 
-  onStartGame() {
+  onStartGame(name) {
 
   }
 
