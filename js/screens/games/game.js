@@ -1,7 +1,7 @@
 import Game1View from './game1-view';
 import Game2View from './game2-view';
 import Game3View from './game3-view';
-import {TIME_FOR_QUESTION, QUICK_ANSWER_TIME, LATE_ANSWER_TIME, MAX_QUESTIONS, initialState, setTime, setLives} from '../../game/game';
+import {TIME_FOR_QUESTION, QUICK_ANSWER_TIME, LATE_ANSWER_TIME, MAX_QUESTIONS, getInitialState, setTime, setLives} from '../../game/game';
 import Application from '../../application';
 import ResultType from '../../enums/result-type';
 import StatisticModel from '../statistic/statistic-model';
@@ -25,9 +25,9 @@ export default class {
   }
 
   init() {
-    this._state = initialState();
+    this._state = getInitialState();
 
-    this._view = this._createView(initialState(), this._getQuestion());
+    this._view = this._createView(getInitialState(), this._getQuestion());
     this._view.show();
     this._startTimer();
   }
@@ -63,7 +63,9 @@ export default class {
 
   _changeScreen(state) {
     if (state.question < MAX_QUESTIONS && state.lives > 0) {
-      this._state = Object.assign({}, this._state, {time: initialState().time});
+      const initialState = getInitialState();
+
+      this._state = Object.assign({}, this._state, {time: initialState.time});
 
       this._view = this._createView(this._state);
       this._view.show();

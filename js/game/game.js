@@ -16,7 +16,7 @@ const throwErrorIfInvalidRange = (time) => {
   }
 };
 
-export const initialState = () => Object.freeze({
+export const getInitialState = () => Object.freeze({
   stats: [],
   lives: MAX_LIVES,
   question: 0,
@@ -51,9 +51,7 @@ export const setLives = (state, lives) => {
     throw new RangeError(`Lives must be between 0...${MAX_LIVES}.`);
   }
 
-  const newState = Object.assign({}, state, {lives});
-
-  return newState;
+  return Object.assign({}, state, {lives});
 };
 
 export const setTime = (state, time) => {
@@ -63,9 +61,7 @@ export const setTime = (state, time) => {
 
   throwErrorIfInvalidRange(time);
 
-  const newState = Object.assign({}, state, {time});
-
-  return newState;
+  return Object.assign({}, state, {time});
 };
 
 export const statsResultList = {

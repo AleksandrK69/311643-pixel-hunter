@@ -1,4 +1,4 @@
-import {initialState} from '../game/game';
+import {getInitialState} from '../game/game';
 import Application from '../application';
 
 const createHeart = (count, type) => {
@@ -8,10 +8,11 @@ const createHeart = (count, type) => {
 };
 
 const createGameStats = ({lives, time}) => {
+  const initialState = getInitialState();
   return `
   <h1 class="game__timer">${time}</h1>
   <div class="game__lives">
-    ${createHeart(initialState().lives - lives, `empty`)}
+    ${createHeart(initialState.lives - lives, `empty`)}
     ${createHeart(lives, `full`)}
   </div>`;
 };

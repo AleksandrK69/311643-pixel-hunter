@@ -39,7 +39,7 @@ export default class extends AbstractView {
     return `
       ${renderHeader()}
       <div class="result">
-      <h1>${this._stats[0].lives > 0 ? `Победа!` : `Проигрышь:(`}</h1>
+      <h1>${this._stats[0].lives > 0 ? `Победа!` : `Проигрыш:(`}</h1>
       
       ${this._stats.map((game, index) => {
         const gameStats = calculateTotalPoints(game);
