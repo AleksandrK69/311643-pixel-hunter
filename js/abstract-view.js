@@ -14,6 +14,14 @@ export default class AbstractView {
     return this._element;
   }
 
+  show() {
+    changeView(this);
+  }
+
+  bind() {
+
+  }
+
   _getMarkup() {
     return this._render();
   }
@@ -27,13 +35,5 @@ export default class AbstractView {
     container.innerHTML = html;
 
     return container.content;
-  }
-
-  show() {
-    changeView(this);
-  }
-
-  bind() {
-
   }
 }

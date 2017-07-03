@@ -32,7 +32,7 @@ export default class extends AbstractView {
   constructor(stats) {
     super();
 
-    this._stats = stats.reverse();
+    this._stats = stats.filter((game) => game.stats !== undefined && game.lives !== undefined).reverse();
   }
 
   get template() {
