@@ -32,7 +32,7 @@ export default class extends AbstractView {
   constructor(stats) {
     super();
 
-    this._stats = stats.filter((game) => typeof game.stats !== `undefined` && typeof game.lives !== `undefined`).reverse();
+    this._stats = stats.filter((game) => Array.isArray(game.stats) && game.stats.length <= 10 && typeof game.lives !== `undefined`).reverse();
   }
 
   get template() {
@@ -94,11 +94,16 @@ export default class extends AbstractView {
   }
 
   bind() {
-    const backBtnNode = this.element.querySelector(`.back`);
+    this._backBtnNode = this.element.querySelector(`.back`);
+    this._onBackHandler = () => this.onBack();
 
-    backBtnNode.addEventListener(`click`, () => {
-      this.onBack();
-    });
+    this._backBtnNode.addEventListener(`click`, this._onBackHandler);
+  }
+
+  unbind() {
+    if (this._backBtnNode) {
+      this._backBtnNode.removeEventListener(`click`, this._onBackHandler);
+    }
   }
 
   onBack() {

@@ -29,20 +29,36 @@ export default class extends AbstractView {
   }
 
   bind() {
-    const backBtnNode = this.element.querySelector(`.back`);
+    this._backBtnNode = this.element.querySelector(`.back`);
     this._timerNode = this.element.querySelector(`.game__timer`);
-    const optionListNode = this.element.querySelectorAll(`.game__option`);
-    const clickImageHandler = (evt) => {
+    this._optionListNode = this.element.querySelectorAll(`.game__option`);
+
+    this._onBackHandler = () => this.onBack();
+    this._onClickImageHandler = (evt) => {
       this.onAnswer(this._question.answers[+evt.target.dataset.index].type === `photo`);
     };
 
-    Array.from(optionListNode).forEach((item) => {
-      item.addEventListener(`click`, clickImageHandler);
-    });
+    if (this._optionListNode) {
+      Array.from(this._optionListNode).forEach((item) => {
+        item.addEventListener(`click`, this._onClickImageHandler);
+      });
+    }
 
-    backBtnNode.addEventListener(`click`, () => {
-      this.onBack();
-    });
+    if (this._backBtnNode) {
+      this._backBtnNode.addEventListener(`click`, this._onBackHandler);
+    }
+  }
+
+  unbind() {
+    if (this._backBtnNode) {
+      this._backBtnNode.removeEventListener(`click`, this._onBackHandler);
+    }
+
+    if (this._optionListNode) {
+      Array.from(this._optionListNode).forEach((item) => {
+        item.removeEventListener(`click`, this._onClickImageHandler);
+      });
+    }
   }
 
   updateTimer(time) {

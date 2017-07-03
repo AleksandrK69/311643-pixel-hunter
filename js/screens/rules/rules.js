@@ -6,6 +6,10 @@ import StatisticModel from '../statistic/statistic-model';
 export default class {
 
   init() {
+    if (this._view) {
+      this._view.unbind();
+    }
+
     this._view = new RulesView();
     this._view.show();
 

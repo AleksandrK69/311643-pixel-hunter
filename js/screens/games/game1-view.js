@@ -28,12 +28,14 @@ export default class extends AbstractView {
   }
 
   bind() {
-    const backBtnNode = this.element.querySelector(`.back`);
+    this._backBtnNode = this.element.querySelector(`.back`);
     this._timerNode = this.element.querySelector(`.game__timer`);
     const gameContentNode = this.element.querySelector(`.game__content`);
-    const radioListNode = gameContentNode.querySelectorAll(`input[type='radio']`);
+    this._radioListNode = gameContentNode.querySelectorAll(`input[type='radio']`);
 
-    const changeRadioHandler = (evt) => {
+    this._onBackHandler = () => this.onBack();
+
+    this._onChangeRadioHandler = (evt) => {
       evt.preventDefault();
 
       const question1Group = gameContentNode.querySelector(`input[name="question1"]:checked`);
@@ -44,15 +46,27 @@ export default class extends AbstractView {
       }
     };
 
-    backBtnNode.addEventListener(`click`, () => {
-      this.onBack();
-    });
+    if (this._backBtnNode) {
+      this._backBtnNode.addEventListener(`click`, this._onBackHandler);
+    }
 
-    Array.from(radioListNode).forEach((item) => {
-      item.addEventListener(`change`, (evt) => {
-        changeRadioHandler(evt);
+    if (this._radioListNode) {
+      Array.from(this._radioListNode).forEach((item) => {
+        item.addEventListener(`change`, this._onChangeRadioHandler);
       });
-    });
+    }
+  }
+
+  unbind() {
+    if (this._backBtnNode) {
+      this._backBtnNode.removeEventListener(`click`, this._onBackHandler);
+    }
+
+    if (this._radioListNode) {
+      Array.from(this._radioListNode).forEach((item) => {
+        item.removeEventListener(`change`, this._onChangeRadioHandler);
+      });
+    }
   }
 
   updateTimer(time) {

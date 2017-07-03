@@ -33,6 +33,10 @@ export default class {
   }
 
   _createView(state) {
+    if (this._view) {
+      this._view.unbind();
+    }
+
     const view = new this._gameViewsList[this._getQuestion().type](state, this._getQuestion());
 
     view.onAnswer = (isCorrectAnswer) => {
@@ -72,6 +76,7 @@ export default class {
       this._startTimer();
 
     } else {
+      console.log(state.stats);
       Application.showPreloader();
       StatisticModel.send({lives: state.lives, stats: state.stats})
         .then(() => Application.showStatistic());

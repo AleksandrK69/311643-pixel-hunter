@@ -24,22 +24,26 @@ export default class extends AbstractView {
   }
 
   bind() {
-    const backBtnNode = this.element.querySelector(`.back`);
-    const nameNode = this.element.querySelector(`.rules__input`);
-    const goBtnNode = this.element.querySelector(`.rules__button`);
+    this._backBtnNode = this.element.querySelector(`.back`);
+    this._nameNode = this.element.querySelector(`.rules__input`);
+    this._goBtnNode = this.element.querySelector(`.rules__button`);
 
-    nameNode.addEventListener(`input`, () => {
-      goBtnNode.disabled = nameNode.value.length === 0;
-    });
-
-    goBtnNode.addEventListener(`click`, (evt) => {
+    this._onBackHandler = () => this.onBack();
+    this._onInputHandler = () => this._goBtnNode.disabled = this._nameNode.value.length === 0;
+    this._onGoHandler = (evt) => {
       evt.preventDefault();
-      this.onStartGame(nameNode.value);
-    });
+      this.onStartGame(this._nameNode.value);
+    };
 
-    backBtnNode.addEventListener(`click`, () => {
-      this.onBack();
-    });
+    this._nameNode.addEventListener(`input`, this._onInputHandler);
+    this._goBtnNode.addEventListener(`click`, this._onGoHandler);
+    this._backBtnNode.addEventListener(`click`, this._onBackHandler);
+  }
+
+  unbind() {
+    this._nameNode.removeEventListener(`input`, this._onInputHandler);
+    this._goBtnNode.removeEventListener(`click`, this._onGoHandler);
+    this._backBtnNode.removeEventListener(`click`, this._onBackHandler);
   }
 
   onStartGame(name) {

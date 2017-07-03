@@ -9,11 +9,18 @@ export default class extends AbstractView {
   }
 
   bind() {
-    const nextBtnNode = this.element.querySelector(`.intro__asterisk`);
+    this._nextBtnNode = this.element.querySelector(`.intro__asterisk`);
+    this._onGoNextStateHandler = () => this.onStart();
 
-    nextBtnNode.addEventListener(`click`, () => {
-      this.onStart();
-    });
+    if (this._nextBtnNode) {
+      this._nextBtnNode.addEventListener(`click`, this._onGoNextStateHandler);
+    }
+  }
+
+  unbind() {
+    if (this._nextBtnNode) {
+      this._nextBtnNode.removeEventListener(`click`, this._onGoNextStateHandler);
+    }
   }
 
   onStart() {

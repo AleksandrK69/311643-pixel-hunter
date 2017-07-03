@@ -22,6 +22,10 @@ export default class AbstractView {
 
   }
 
+  unbind() {
+
+  }
+
   _getMarkup() {
     return this._render();
   }
