@@ -76,7 +76,6 @@ export default class {
       this._startTimer();
 
     } else {
-      console.log(state.stats);
       Application.showPreloader();
       StatisticModel.send({lives: state.lives, stats: state.stats})
         .then(() => Application.showStatistic());

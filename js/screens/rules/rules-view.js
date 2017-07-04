@@ -29,7 +29,11 @@ export default class extends AbstractView {
     this._goBtnNode = this.element.querySelector(`.rules__button`);
 
     this._onBackHandler = () => this.onBack();
-    this._onInputHandler = () => this._goBtnNode.disabled = this._nameNode.value.length === 0;
+    this._onInputHandler = () => {
+      this._goBtnNode.disabled = this._nameNode.value.length === 0;
+
+      return;
+    };
     this._onGoHandler = (evt) => {
       evt.preventDefault();
       this.onStartGame(this._nameNode.value);
